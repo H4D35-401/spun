@@ -123,9 +123,25 @@ internal fun MainScreen(
     AndroidView(
       factory = { context ->
         Player3DView(
-          context,
-          playbackController
+          appContext = context,
+          onReelSeek = { deltaMs -> playbackController.seekBy(deltaMs) },
+          onReelScrubStart = {},
+          onReelScrubEnd = {},
         )
+      },
+      update = { view ->
+        view.updateNowPlaying(
+          com.zariel.spun.playback.NowPlayingState(
+            title = playbackState.title,
+            artist = playbackState.artist,
+            album = playbackState.album,
+            artwork = playbackState.artwork,
+            isPlaying = playbackState.isPlaying,
+          )
+        )
+      },
+      onRelease = { view ->
+        view.destroy()
       },
       modifier = Modifier.size(300.dp)
     )

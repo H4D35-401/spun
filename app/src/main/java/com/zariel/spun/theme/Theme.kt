@@ -10,41 +10,88 @@ import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 
-private val DarkColorScheme = darkColorScheme(primary = Purple80, secondary = PurpleGrey80, tertiary = Pink80)
+// ---------------------------------------------------------------------------
+// Spun Material3 color schemes
+//
+// Dark scheme is the primary design target. Light scheme is provided so the
+// app behaves sensibly when the user switches to system light mode.
+//
+// Dynamic color (Material You) is disabled by default — Spun's identity is
+// the amber/warm-neutral palette, not the user's wallpaper color.
+// ---------------------------------------------------------------------------
 
-private val LightColorScheme =
-  lightColorScheme(
-    primary = Purple40,
-    secondary = PurpleGrey40,
-    tertiary = Pink40,
+private val SpunDarkColorScheme = darkColorScheme(
+    primary          = SpunAmber,
+    onPrimary        = SpunBlack,
+    primaryContainer = SpunAmberDim,
+    onPrimaryContainer = SpunOnSurface,
 
-    /* Other default colors to override
-    background = Color(0xFFFFFBFE),
-    surface = Color(0xFFFFFBFE),
-    onPrimary = Color.White,
-    onSecondary = Color.White,
-    onTertiary = Color.White,
-    onBackground = Color(0xFF1C1B1F),
-    onSurface = Color(0xFF1C1B1F),
-    */
-  )
+    secondary        = SpunOnSurfaceMed,
+    onSecondary      = SpunBlack,
+    secondaryContainer = SpunSurfaceHigh,
+    onSecondaryContainer = SpunOnSurface,
+
+    tertiary         = SpunSuccess,
+    onTertiary       = SpunBlack,
+
+    background       = SpunBlack,
+    onBackground     = SpunOnSurface,
+
+    surface          = SpunSurface,
+    onSurface        = SpunOnSurface,
+    surfaceVariant   = SpunSurfaceMid,
+    onSurfaceVariant = SpunOnSurfaceMed,
+
+    outline          = SpunOutline,
+    outlineVariant   = SpunOutlineWeak,
+
+    error            = SpunError,
+    onError          = SpunBlack,
+)
+
+private val SpunLightColorScheme = lightColorScheme(
+    primary          = SpunAmberDim,
+    onPrimary        = SpunLightSurface,
+    primaryContainer = SpunAmber,
+    onPrimaryContainer = SpunLightOnSurface,
+
+    secondary        = SpunLightOnSurfaceMed,
+    onSecondary      = SpunLightSurface,
+    secondaryContainer = SpunLightSurfaceMid,
+    onSecondaryContainer = SpunLightOnSurface,
+
+    background       = SpunLightBg,
+    onBackground     = SpunLightOnSurface,
+
+    surface          = SpunLightSurface,
+    onSurface        = SpunLightOnSurface,
+    surfaceVariant   = SpunLightSurfaceMid,
+    onSurfaceVariant = SpunLightOnSurfaceMed,
+
+    outline          = SpunLightOutline,
+
+    error            = SpunError,
+)
 
 @Composable
 fun SpunTheme(
-  darkTheme: Boolean = isSystemInDarkTheme(),
-  // Dynamic color is available on Android 12+
-  dynamicColor: Boolean = true,
-  content: @Composable () -> Unit,
+    darkTheme: Boolean = isSystemInDarkTheme(),
+    // Dynamic color disabled — Spun has its own visual identity.
+    dynamicColor: Boolean = false,
+    content: @Composable () -> Unit,
 ) {
-  val colorScheme =
-    when {
-      dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
-        val context = LocalContext.current
-        if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
-      }
-      darkTheme -> DarkColorScheme
-      else -> LightColorScheme
+    val colorScheme = when {
+        dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
+            val context = LocalContext.current
+            if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
+        }
+        darkTheme -> SpunDarkColorScheme
+        else      -> SpunLightColorScheme
     }
 
-  MaterialTheme(colorScheme = colorScheme, typography = Typography, content = content)
+    MaterialTheme(
+        colorScheme = colorScheme,
+        typography  = SpunTypography,
+        content     = content,
+    )
 }

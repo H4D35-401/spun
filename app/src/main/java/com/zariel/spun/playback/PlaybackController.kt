@@ -247,6 +247,21 @@ class PlaybackController(context: Context) {
             }
         }
 
+        fun seekTo(positionMs: Long) {
+            if (controllerFuture.isDone) {
+                controllerFuture.get().seekTo(positionMs.coerceAtLeast(0L))
+            }
+        }
+
+        fun seekBy(deltaMs: Long) {
+            if (controllerFuture.isDone) {
+                val controller = controllerFuture.get()
+                val current = controller.currentPosition
+                controller.seekTo((current + deltaMs).coerceAtLeast(0L))
+            }
+        }
+
+
         fun release() {
             //visualizer?.release()             //remove
             //visualizer = null                 //remove

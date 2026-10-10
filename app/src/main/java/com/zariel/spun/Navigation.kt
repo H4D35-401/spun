@@ -1,38 +1,32 @@
 package com.zariel.spun
 
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.safeDrawingPadding
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.ui.NavDisplay
-import com.zariel.spun.playback.PlaybackController
-import com.zariel.spun.ui.main.MainScreen
+import com.zariel.spun.playback.NowPlayingViewModel
+import com.zariel.spun.ui.nowplaying.NowPlayingScreen
 
 @Composable
 fun MainNavigation(
-  onPickMusic: () -> Unit,
-                   playbackController: PlaybackController
+    onPickMusic: () -> Unit,
+    nowPlayingViewModel: NowPlayingViewModel,
 ) {
-  val backStack = rememberNavBackStack(Main)
+    val backStack = rememberNavBackStack(NowPlaying)
 
-  NavDisplay(
-    backStack = backStack,
-    onBack = { backStack.removeLastOrNull() },
-             entryProvider =
-             entryProvider {
-               entry<Main> {
-                 MainScreen(
-                   onItemClick = { navKey -> backStack.add(navKey) },
-                            onPickMusic = onPickMusic,
-                            playbackController = playbackController,
-                            modifier = Modifier
-                            .safeDrawingPadding()
-                            .padding(16.dp)
-                 )
-               }
-             },
-  )
+    NavDisplay(
+        backStack = backStack,
+        onBack = { backStack.removeLastOrNull() },
+        entryProvider = entryProvider {
+            entry<NowPlaying> {
+                NowPlayingScreen(
+                    viewModel = nowPlayingViewModel,
+                    onPickMusic = onPickMusic,
+                    modifier = Modifier.fillMaxSize(),
+                )
+            }
+        },
+    )
 }

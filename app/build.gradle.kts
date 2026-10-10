@@ -56,8 +56,8 @@ dependencies {
   implementation(libs.filament.android)
   implementation(libs.filament.utils)
 
-  implementation("com.google.android.filament:filament-utils-android:1.75.1")
-  
+
+
   implementation(libs.androidx.media3.exoplayer)
   implementation(libs.androidx.media3.session)
   implementation(libs.androidx.media3.common)
@@ -70,6 +70,8 @@ dependencies {
   implementation(libs.androidx.compose.ui)
   implementation(libs.androidx.compose.ui.tooling.preview)
   implementation(libs.androidx.compose.material3)
+  implementation(libs.androidx.compose.material.icons.core)
+  implementation(libs.androidx.compose.material.icons.extended)
   // Tooling
   debugImplementation(libs.androidx.compose.ui.tooling)
   // Instrumented tests

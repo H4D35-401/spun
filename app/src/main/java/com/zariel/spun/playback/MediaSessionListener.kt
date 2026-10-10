@@ -107,6 +107,16 @@ object ExternalMediaSessions {
     fun endScrub() {
         scrubbingController = null
     }
+
+    /**
+     * Nudges the [activeController] flow so downstream collectors (e.g. NowPlayingViewModel)
+     * re-read the latest position from the external controller. Called on a timer while an
+     * external source is actively playing.
+     */
+    fun refreshPosition() {
+        // Re-emit the current value to trigger combine() in NowPlayingViewModel.
+        _activeController.value = _activeController.value
+    }
 }
 
 
